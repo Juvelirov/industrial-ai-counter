@@ -1,0 +1,17 @@
+video:
+  source: "cam.mp4"  # на производстве настроить под rtsp cam
+  target_width: 1280
+
+model:
+  path: "best_aug_26.pt"
+  conf_threshold: 0.25
+
+analytics:
+  line_x: 600  # позиция линии подсчета по горизонтальной оси
+
+database:
+  host: localhost
+  port: 5432
+  database: line_monitoring_db
+  user: postgres # брать из перем окружения потом
+  password: postgres # брать из перем окружения потом
