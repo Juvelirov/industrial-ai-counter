@@ -60,21 +60,20 @@ class MonitoringEngine:
         cap.release()
         cv2.destroyAllWindows()
 
-    def _draw_frame(self, frame, results, counts, centers, fps_value):
-        """Сборка кадра (рамка + линия + зона контроля + fps)"""
-        # Рамка
-        frame = results.plot(img=frame, line_width=1)
-        # Линия и зона контроля
-        frame = self.vis.draw_overlay_logic(frame, self.line_x)
-        frame = self.vis.draw_points(frame, centers)
-        frame = self.vis.draw_statistics(frame, counts, fps_value)
-        frame = self.vis.put_russian_text_with_outline(
-            frame, "ЗОНА КОНТРОЛЯ", (self.line_x // 2 - 100, frame.shape[0] - 50)
-        )
-
-        return frame
-
     def stop(self):
         """Остановка цикла"""
         self.is_running = False
         print("Движок остановлен")
+
+    def _draw_frame(self, frame, results, counts, centers, fps_value):
+        frame = results.plot(img=frame, line_width=1)
+        frame = self.vis.draw_overlay_logic(frame, self.line_x)
+        frame = self.vis.draw_points(frame, centers)
+
+        # Передаем line_x в метод
+        frame = self.vis.put_russian_text_with_outline(
+            frame, "ЗОНА КОНТРОЛЯ", (0, 0), self.line_x,
+            outline_width = 1
+        )
+
+        return frame

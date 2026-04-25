@@ -8,6 +8,7 @@ class ObjectDetector:
         self.conf = conf_threshold
 
     def get_tracks(self, frame) -> Results:
+        """Возвращает объект с результатами детекции и трекинга."""
         results = self.model.track(
             frame,
             persist = True,

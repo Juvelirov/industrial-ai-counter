@@ -10,6 +10,11 @@ class LineCrossCounter:
         self.passed_ids: Set[int] = set()
         self.last_positions: Dict[int, float] = {}
 
+        self.NAMES_MAPPING = {
+            "rezec_r50ec19": "Резец R50EC-19.5/20",
+            "koronka_db41": "Коронка DB41.2507L",
+        }
+
     def update(self, results) -> Tuple[Dict[str, int], List[Tuple[int, int]]]:
         """
         Обрабатывает результаты детекции.
@@ -33,6 +38,8 @@ class LineCrossCounter:
             centers.append((int(center_x), int(center_y)))
 
             label = names_dict[cls_idx]
+
+            label = self.NAMES_MAPPING.get(label, label)
 
             if track_id not in self.passed_ids:
                 if track_id in self.last_positions:
